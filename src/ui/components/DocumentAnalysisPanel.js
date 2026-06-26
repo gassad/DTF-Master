@@ -80,10 +80,10 @@ export class DocumentAnalysisPanel {
     this.#resultNode.className = 'dtf-document-result';
 
     const rows = [
-      ['Name', info.fileName],
+      ['File Name', info.fileName],
       ['Width', info.width],
       ['Height', info.height],
-      ['DPI', info.dpi],
+      ['Resolution (DPI)', info.dpi],
       ['Color Mode', info.colorMode],
       ['Bit Depth', info.bitDepth],
       ['Layer Count', info.totalLayers]
