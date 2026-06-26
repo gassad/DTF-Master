@@ -13,7 +13,9 @@ body {
   font-size: 13px;
 }
 
-button {
+button,
+input,
+select {
   font: inherit;
 }
 
@@ -23,45 +25,74 @@ button {
 
 .dtf-shell {
   display: grid;
+  grid-template-columns: minmax(128px, 38%) minmax(180px, 1fr);
   min-height: 100vh;
-  padding: var(--dtf-space-4);
   background: var(--dtf-color-bg);
 }
 
-.dtf-document-panel {
-  display: grid;
-  align-content: start;
-  gap: var(--dtf-space-4);
-  width: 100%;
+.dtf-sidebar {
+  padding: var(--dtf-space-4);
+  border-right: 1px solid var(--dtf-color-border);
+  background: var(--dtf-color-surface);
 }
 
-.dtf-document-panel h1 {
+.dtf-sidebar h1,
+.dtf-document-panel h1,
+.dtf-settings h2 {
   margin: 0;
   color: var(--dtf-color-text);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 650;
   letter-spacing: 0;
+}
+
+.dtf-workflow {
+  display: grid;
+  gap: var(--dtf-space-2);
+  margin-top: var(--dtf-space-5);
+}
+
+.dtf-workflow-button,
+.dtf-primary-button {
+  min-height: 32px;
+  color: var(--dtf-color-text);
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dtf-radius-sm);
+}
+
+.dtf-workflow-button:hover,
+.dtf-primary-button:hover {
+  background: var(--dtf-color-surface-raised);
+  border-color: var(--dtf-color-border);
 }
 
 .dtf-primary-button {
   width: 100%;
-  min-height: 36px;
   padding: 0 var(--dtf-space-3);
   color: #101010;
   text-align: center;
   background: var(--dtf-color-accent);
-  border: 1px solid transparent;
-  border-radius: var(--dtf-radius-sm);
   font-weight: 650;
-}
-
-.dtf-primary-button:hover {
-  border-color: var(--dtf-color-text);
 }
 
 .dtf-primary-button:disabled {
   cursor: default;
   opacity: 0.65;
+}
+
+.dtf-main-panel {
+  display: grid;
+  align-content: start;
+  gap: var(--dtf-space-5);
+  padding: var(--dtf-space-4);
+}
+
+.dtf-document-panel,
+.dtf-settings {
+  display: grid;
+  gap: var(--dtf-space-3);
 }
 
 .dtf-document-result {
@@ -96,4 +127,11 @@ button {
 .dtf-document-error {
   color: #ffb5b5;
   border-color: #7a3434;
+}
+
+.dtf-setting-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--dtf-space-3);
 }
