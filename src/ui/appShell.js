@@ -1,12 +1,10 @@
 console.log('APPSHELL START');
 
-export async function createAppShell({ mountNode, config, settingsService, eventBus, logger }) {
-  const [{ SidebarPanel }, { DocumentAnalysisPanel }, { SettingsPanel }] = await Promise.all([
-    import('./components/SidebarPanel.js'),
-    import('./components/DocumentAnalysisPanel.js'),
-    import('./components/SettingsPanel.js')
-  ]);
+import { SidebarPanel } from './components/SidebarPanel.js';
+import { DocumentAnalysisPanel } from './components/DocumentAnalysisPanel.js';
+import { SettingsPanel } from './components/SettingsPanel.js';
 
+export function createAppShell({ mountNode, config, settingsService, eventBus, logger }) {
   mountNode.innerHTML = '';
   mountNode.classList.add('dtf-master-root');
 
