@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.log
+coverage/
+dist/
+build/
+.uxp/
+.vscode/
+!.vscode/extensions.json

@@ -1,0 +1,58 @@
+@import url("../config/tokens.css");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--dtf-color-text);
+  background: var(--dtf-color-bg);
+  font-family: var(--dtf-font-family);
+  font-size: 13px;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.dtf-shell {
+  display: grid;
+  grid-template-columns: minmax(128px, 38%) minmax(180px, 1fr);
+  min-height: 100vh;
+}
+
+.dtf-sidebar {
+  padding: var(--dtf-space-4);
+  border-right: 1px solid var(--dtf-color-border);
+  background: var(--dtf-color-surface);
+}
+
+.dtf-workflow {
+  display: grid;
+  gap: var(--dtf-space-2);
+  margin-top: var(--dtf-space-5);
+}
+
+.dtf-workflow-button {
+  min-height: 32px;
+  color: var(--dtf-color-text);
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--dtf-radius-sm);
+}
+
+.dtf-settings {
+  padding: var(--dtf-space-4);
+}
+
+.dtf-setting-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--dtf-space-3);
+}

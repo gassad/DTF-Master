@@ -1,0 +1,48 @@
+{
+  "manifestVersion": 5,
+  "id": "com.dtfmaster.photoshop.plugin",
+  "name": "DTF MASTER",
+  "version": "0.1.0",
+  "main": "src/index.html",
+  "host": {
+    "app": "PS",
+    "minVersion": "25.0.0"
+  },
+  "requiredPermissions": {
+    "localFileSystem": "request"
+  },
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "dtf-master-panel",
+      "label": {
+        "default": "DTF MASTER"
+      },
+      "minimumSize": {
+        "width": 320,
+        "height": 480
+      },
+      "maximumSize": {
+        "width": 640,
+        "height": 1200
+      },
+      "preferredDockedSize": {
+        "width": 380,
+        "height": 720
+      },
+      "preferredFloatingSize": {
+        "width": 420,
+        "height": 760
+      }
+    }
+  ],
+  "icons": [
+    {
+      "width": 23,
+      "height": 23,
+      "path": "src/assets/icons/icon-23.png",
+      "scale": [1, 2],
+      "theme": ["darkest", "dark", "medium", "lightest"]
+    }
+  ]
+}

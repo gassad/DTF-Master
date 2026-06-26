@@ -1,0 +1,25 @@
+{
+  "name": "dtf-master",
+  "version": "0.1.0",
+  "description": "Professional Adobe UXP Photoshop plugin for DTF print preparation workflows.",
+  "private": true,
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "node --test",
+    "validate:manifest": "node tests/manifest.test.js",
+    "validate:architecture": "node tests/architecture.test.js"
+  },
+  "keywords": [
+    "adobe",
+    "uxp",
+    "photoshop",
+    "dtf",
+    "plugin"
+  ],
+  "author": "DTF MASTER",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  }
+}
