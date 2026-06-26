@@ -1,3 +1,4 @@
+alert("MAIN.JS EXECUTOU");
 import { PluginController } from './core/PluginController.js';
 import { DEFAULT_CONFIG } from './config/defaultConfig.js';
 import { Logger } from './utils/Logger.js';
@@ -12,7 +13,12 @@ const controller = new PluginController({ defaultConfig: DEFAULT_CONFIG, logger 
 
 console.log('BOOTSTRAP 3');
 
-controller.bootstrap().catch((error) => {
-  console.error(error);
-  throw error;
+controller.bootstrap()
+  .then(() => {
+    alert("BOOTSTRAP TERMINOU");
+  })
+  .catch((error) => {
+    alert(error.stack || error.message);
+    console.error(error);
+    throw error;
 });
