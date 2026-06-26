@@ -10,7 +10,17 @@ export class EventBus {
     const listeners = this.#listeners.get(eventName) ?? new Set();
     listeners.add(listener);
     this.#listeners.set(eventName, listeners);
+
     return () => this.off(eventName, listener);
+  }
+
+  once(eventName, listener) {
+    const unsubscribe = this.on(eventName, (payload) => {
+      unsubscribe();
+      listener(payload);
+    });
+
+    return unsubscribe;
   }
 
   off(eventName, listener) {
@@ -20,11 +30,13 @@ export class EventBus {
   emit(eventName, payload = {}) {
     const listeners = this.#listeners.get(eventName);
     if (!listeners?.size) return;
+
     listeners.forEach((listener) => {
       try {
         listener(payload);
       } catch (error) {
-        this.#logger.error('Event listener failed.', { eventName, error });
+        console.error(error);
+        throw error;
       }
     });
   }

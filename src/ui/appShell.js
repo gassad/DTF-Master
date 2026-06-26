@@ -1,8 +1,12 @@
-import { SidebarPanel } from './components/SidebarPanel.js';
-import { DocumentAnalysisPanel } from './components/DocumentAnalysisPanel.js';
-import { SettingsPanel } from './components/SettingsPanel.js';
+console.log('APPSHELL START');
 
-export function createAppShell({ mountNode, config, settingsService, eventBus, logger }) {
+export async function createAppShell({ mountNode, config, settingsService, eventBus, logger }) {
+  const [{ SidebarPanel }, { DocumentAnalysisPanel }, { SettingsPanel }] = await Promise.all([
+    import('./components/SidebarPanel.js'),
+    import('./components/DocumentAnalysisPanel.js'),
+    import('./components/SettingsPanel.js')
+  ]);
+
   mountNode.innerHTML = '';
   mountNode.classList.add('dtf-master-root');
 
@@ -17,19 +21,32 @@ export function createAppShell({ mountNode, config, settingsService, eventBus, l
     eventBus,
     logger: logger.child('SidebarPanel')
   });
+  console.log('SIDEBAR CREATED');
+
   const documentAnalysis = new DocumentAnalysisPanel({
     eventBus,
     logger: logger.child('DocumentAnalysisPanel')
   });
+  console.log('DOCUMENT PANEL CREATED');
+
   const settings = new SettingsPanel({
     settingsService,
     eventBus,
     logger: logger.child('SettingsPanel')
   });
+  console.log('SETTINGS PANEL CREATED');
 
-  content.append(documentAnalysis.render(), settings.render());
-  shell.append(sidebar.render(), content);
+  console.log('RENDER SIDEBAR');
+  const sidebarElement = sidebar.render();
+  console.log('RENDER DOCUMENT');
+  const documentElement = documentAnalysis.render();
+  console.log('RENDER SETTINGS');
+  const settingsElement = settings.render();
+
+  content.append(documentElement, settingsElement);
+  shell.append(sidebarElement, content);
   mountNode.append(shell);
+  console.log('APPENDED');
 
   return shell;
 }

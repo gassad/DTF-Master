@@ -8,12 +8,14 @@ export class SidebarPanel {
   #logger;
 
   constructor({ config, eventBus, logger }) {
+    console.log('CONSTRUCTOR OK');
     this.#config = config;
     this.#eventBus = eventBus;
     this.#logger = logger;
   }
 
   render() {
+    console.log('RENDER START');
     const panel = createElement('section', { className: 'dtf-sidebar' });
     const title = createElement('h1', { textContent: this.#config.appName });
     const nav = createElement('nav', { className: 'dtf-workflow' });
@@ -26,6 +28,7 @@ export class SidebarPanel {
       nav.append(button);
     });
     panel.append(title, nav);
+    console.log('RENDER END');
     return panel;
   }
 }

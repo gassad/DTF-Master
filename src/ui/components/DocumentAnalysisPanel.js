@@ -18,6 +18,7 @@ export class DocumentAnalysisPanel {
    * @param {import('../../utils/Logger.js').Logger} dependencies.logger
    */
   constructor({ eventBus, logger }) {
+    console.log('CONSTRUCTOR OK');
     this.#eventBus = eventBus;
     this.#logger = logger;
   }
@@ -28,6 +29,7 @@ export class DocumentAnalysisPanel {
    * @returns {HTMLElement}
    */
   render() {
+    console.log('RENDER START');
     const panel = createElement('section', { className: 'dtf-document-panel' });
     const title = createElement('h1', { textContent: 'DTF MASTER' });
 
@@ -57,6 +59,7 @@ export class DocumentAnalysisPanel {
     });
 
     panel.append(title, this.#button, this.#resultNode);
+    console.log('RENDER END');
     return panel;
   }
 

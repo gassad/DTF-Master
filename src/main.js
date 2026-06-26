@@ -1,10 +1,21 @@
-import { PluginController } from './core/PluginController.js';
-import { DEFAULT_CONFIG } from './config/defaultConfig.js';
-import { Logger } from './utils/Logger.js';
+console.log('BOOTSTRAP 1');
 
-const logger = new Logger({ context: 'Bootstrap' });
-const controller = new PluginController({ defaultConfig: DEFAULT_CONFIG, logger });
+try {
+  const [{ PluginController }, { DEFAULT_CONFIG }, { Logger }] = await Promise.all([
+    import('./core/PluginController.js'),
+    import('./config/defaultConfig.js'),
+    import('./utils/Logger.js')
+  ]);
 
-controller.bootstrap().catch((error) => {
-  logger.error('Failed to bootstrap DTF MASTER.', { error });
-});
+  console.log('BOOTSTRAP 2');
+
+  const logger = new Logger({ context: 'Bootstrap' });
+  const controller = new PluginController({ defaultConfig: DEFAULT_CONFIG, logger });
+
+  console.log('BOOTSTRAP 3');
+
+  await controller.bootstrap();
+} catch (error) {
+  console.error(error);
+  throw error;
+}

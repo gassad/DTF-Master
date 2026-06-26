@@ -4,10 +4,12 @@ export class SettingsPanel {
   #settingsService;
 
   constructor({ settingsService }) {
+    console.log('CONSTRUCTOR OK');
     this.#settingsService = settingsService;
   }
 
   render() {
+    console.log('RENDER START');
     const panel = createElement('section', { className: 'dtf-settings' });
     const heading = createElement('h2', { textContent: 'Settings' });
     const preserveLayers = createElement('input', { attributes: { type: 'checkbox', name: 'preserveOriginalLayers' } });
@@ -16,6 +18,7 @@ export class SettingsPanel {
     const row = createElement('label', { className: 'dtf-setting-row' });
     row.append(createElement('span', { textContent: 'Preserve layers' }), preserveLayers);
     panel.append(heading, row);
+    console.log('RENDER END');
     return panel;
   }
 }

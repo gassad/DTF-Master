@@ -30,11 +30,16 @@ export class PluginController {
   }
 
   async bootstrap() {
+    console.log('BOOTSTRAP START');
     await this.#configManager.load();
+    console.log('CONFIG LOADED');
     await this.#settingsService.load();
+    console.log('SETTINGS LOADED');
     this.#registerDocumentEvents();
     const mountNode = document.getElementById('dtf-master-app') ?? document.body;
-    createAppShell({ mountNode, config: this.#configManager.snapshot(), settingsService: this.#settingsService, eventBus: this.#eventBus, logger: this.#logger.child('UI') });
+    console.log('CREATING APP SHELL');
+    await createAppShell({ mountNode, config: this.#configManager.snapshot(), settingsService: this.#settingsService, eventBus: this.#eventBus, logger: this.#logger.child('UI') });
+    console.log('APP SHELL CREATED');
     this.#eventBus.emit('plugin:ready', { engines: Object.keys(this.#engines) });
   }
 
@@ -44,10 +49,8 @@ export class PluginController {
         const info = await this.#documentService.getDocumentInfo();
         this.#eventBus.emit('document:infoLoaded', { info });
       } catch (error) {
-        this.#logger.error('Unable to read the active Photoshop document.', { error });
-        this.#eventBus.emit('document:infoFailed', {
-          message: error.message || 'Unable to read the active Photoshop document.'
-        });
+        console.error(error);
+        throw error;
       }
     });
   }
