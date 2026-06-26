@@ -37,7 +37,8 @@ select {
   margin-top: var(--dtf-space-5);
 }
 
-.dtf-workflow-button {
+.dtf-workflow-button,
+.dtf-primary-button {
   min-height: 32px;
   color: var(--dtf-color-text);
   text-align: left;
@@ -46,8 +47,83 @@ select {
   border-radius: var(--dtf-radius-sm);
 }
 
-.dtf-settings {
+.dtf-workflow-button:hover,
+.dtf-primary-button:hover {
+  background: var(--dtf-color-surface-raised);
+  border-color: var(--dtf-color-border);
+}
+
+.dtf-primary-button {
+  width: 100%;
+  padding: 0 var(--dtf-space-3);
+  text-align: center;
+  background: var(--dtf-color-accent);
+  color: #101010;
+  font-weight: 650;
+}
+
+.dtf-primary-button:disabled {
+  cursor: default;
+  opacity: 0.65;
+}
+
+.dtf-main-panel {
+  display: grid;
+  align-content: start;
+  gap: var(--dtf-space-5);
   padding: var(--dtf-space-4);
+}
+
+.dtf-document-panel,
+.dtf-settings {
+  display: grid;
+  gap: var(--dtf-space-3);
+}
+
+.dtf-document-panel h2,
+.dtf-settings h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.dtf-document-result {
+  display: grid;
+  gap: var(--dtf-space-2);
+  min-height: 40px;
+  padding: var(--dtf-space-3);
+  color: var(--dtf-color-muted);
+  background: var(--dtf-color-surface);
+  border: 1px solid var(--dtf-color-border);
+  border-radius: var(--dtf-radius-sm);
+}
+
+.dtf-document-row {
+  display: grid;
+  grid-template-columns: minmax(72px, 42%) 1fr;
+  gap: var(--dtf-space-2);
+  align-items: center;
+}
+
+.dtf-document-label {
+  color: var(--dtf-color-muted);
+}
+
+.dtf-document-row strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--dtf-color-text);
+  font-weight: 600;
+}
+
+.dtf-document-error {
+  color: #ffb5b5;
+  border-color: #7a3434;
+}
+
+.dtf-settings {
+  padding: 0;
 }
 
 .dtf-setting-row {
