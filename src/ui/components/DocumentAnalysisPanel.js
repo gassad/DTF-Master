@@ -1,10 +1,10 @@
 import { createElement } from '../../utils/dom.js';
 
 /**
- * Temporary document inspection panel for the first UXP integration.
+ * Main MVP panel for reading the active Photoshop document.
  *
- * The component emits application events and renders responses. It does not
- * import or call Photoshop APIs directly, keeping UI separated from UXP logic.
+ * The component only emits UI intent and renders results. Photoshop access stays
+ * isolated in PhotoshopDocumentService through the application controller.
  */
 export class DocumentAnalysisPanel {
   #eventBus;
@@ -23,25 +23,26 @@ export class DocumentAnalysisPanel {
   }
 
   /**
-   * Renders the panel UI.
+   * Renders the MVP panel UI.
    *
    * @returns {HTMLElement}
    */
   render() {
     const panel = createElement('section', { className: 'dtf-document-panel' });
-    const heading = createElement('h2', { textContent: 'Document' });
+    const title = createElement('h1', { textContent: 'DTF MASTER' });
 
     this.#button = createElement('button', {
       className: 'dtf-primary-button',
-      textContent: 'Analyze Document',
+      textContent: 'Analyze',
       attributes: { type: 'button' }
     });
     this.#resultNode = createElement('div', { className: 'dtf-document-result' });
+    this.#renderMessage('Open a Photoshop document and click Analyze.');
 
     this.#button.addEventListener('click', () => {
       this.#logger.info('Document analysis requested.');
       this.#setLoadingState(true);
-      this.#renderMessage('Reading active Photoshop document...');
+      this.#renderMessage('Reading the active Photoshop document...');
       this.#eventBus.emit('document:analyzeRequested');
     });
 
@@ -52,25 +53,25 @@ export class DocumentAnalysisPanel {
 
     this.#eventBus.on('document:infoFailed', ({ message }) => {
       this.#setLoadingState(false);
-      this.#renderError(message);
+      this.#renderError(message || 'No Photoshop document is open. Open a document and try again.');
     });
 
-    panel.append(heading, this.#button, this.#resultNode);
+    panel.append(title, this.#button, this.#resultNode);
     return panel;
   }
 
   /**
-   * Enables or disables the temporary action button during async work.
+   * Updates the Analyze button while Photoshop metadata is being read.
    *
    * @param {boolean} loading Current loading state.
    */
   #setLoadingState(loading) {
     this.#button.disabled = loading;
-    this.#button.textContent = loading ? 'Analyzing...' : 'Analyze Document';
+    this.#button.textContent = loading ? 'Analyzing...' : 'Analyze';
   }
 
   /**
-   * Renders document information returned by the service.
+   * Renders document information returned by PhotoshopDocumentService.
    *
    * @param {object} info Normalized document info.
    */
@@ -79,13 +80,13 @@ export class DocumentAnalysisPanel {
     this.#resultNode.className = 'dtf-document-result';
 
     const rows = [
-      ['File', info.fileName],
+      ['Name', info.fileName],
       ['Width', info.width],
       ['Height', info.height],
       ['DPI', info.dpi],
       ['Color Mode', info.colorMode],
       ['Bit Depth', info.bitDepth],
-      ['Layers', info.totalLayers]
+      ['Layer Count', info.totalLayers]
     ];
 
     rows.forEach(([label, value]) => {
@@ -109,7 +110,7 @@ export class DocumentAnalysisPanel {
   }
 
   /**
-   * Renders a user-facing error message.
+   * Renders a friendly user-facing error message.
    *
    * @param {string} message Error message.
    */

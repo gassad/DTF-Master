@@ -34,7 +34,7 @@ export class PhotoshopDocumentService {
     const document = app.activeDocument;
 
     if (!document) {
-      throw new Error('No active Photoshop document is open.');
+      throw new Error('No Photoshop document is open. Open a document and try again.');
     }
 
     return document;
@@ -47,11 +47,12 @@ export class PhotoshopDocumentService {
    */
   async getDocumentInfo() {
     const document = this.getActiveDocument();
+    const canvasSize = this.getCanvasSize(document);
 
     return {
       fileName: this.#readFileName(document),
-      width: this.getCanvasSize(document).width,
-      height: this.getCanvasSize(document).height,
+      width: canvasSize.width,
+      height: canvasSize.height,
       dpi: this.getResolution(document),
       colorMode: this.getColorMode(document),
       bitDepth: this.getBitDepth(document),
@@ -86,7 +87,7 @@ export class PhotoshopDocumentService {
    * @returns {string}
    */
   getColorMode(document = this.getActiveDocument()) {
-    return this.#toDisplayValue(document.mode ?? document.colorMode ?? 'unknown');
+    return String(this.#toDisplayValue(document.mode ?? document.colorMode ?? 'unknown'));
   }
 
   /**
@@ -119,14 +120,15 @@ export class PhotoshopDocumentService {
    */
   #getPhotoshopApp() {
     if (!this.#photoshopApi) {
-      this.#photoshopApi = globalThis.require?.('photoshop') ?? null;
+      const photoshopRequire = globalThis.require ?? (typeof require === 'function' ? require : null);
+      this.#photoshopApi = photoshopRequire?.('photoshop') ?? null;
     }
 
     const app = this.#photoshopApi?.app;
 
     if (!app) {
       this.#logger.error('Adobe Photoshop UXP API is unavailable.');
-      throw new Error('Adobe Photoshop UXP API is unavailable.');
+      throw new Error('Photoshop is not available. Open the plugin inside Photoshop and try again.');
     }
 
     return app;
